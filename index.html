@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elixir Perfume - فخامة تليق بذوقك</title>
+    <style>
+        :root {
+            --bg-color: #0f0f0f;
+            --card-bg: #1a1a1a;
+            --gold: #d4af37;
+            --gold-hover: #f1c40f;
+            --text-color: #f5f5f5;
+            --text-muted: #aaa;
+            --border-color: #333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        header {
+            background: linear-gradient(180deg, #1f1a0e 0%, var(--bg-color) 100%);
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        header h1 {
+            color: var(--gold);
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            border: 1px solid var(--gold);
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--gold);
+            color: #000;
+            font-weight: bold;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 15px;
+            transition: transform 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            background-color: #252525;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            color: var(--gold);
+            margin-bottom: 5px;
+        }
+
+        .product-note {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .price-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .current-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2ecc71;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .add-to-cart-btn {
+            background-color: var(--gold);
+            color: #000;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: var(--gold-hover);
+        }
+
+        .checkout-section {
+            background-color: var(--card-bg);
+            border: 1px solid var(--gold);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 40px;
+        }
+
+        .checkout-section h2 {
+            color: var(--gold);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .cart-items {
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .cart-total {
+            font-size: 1.3rem;
+            text-align: left;
+            margin: 15px 0;
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background-color: #252525;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .submit-btn {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            width: 100%;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #219150;
+        }
+
+        .contact-box {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .whatsapp-link {
+            display: inline-block;
+            background-color: #25D366;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+
+        .empty-cart-msg {
+            text-align: center;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Elixir Perfume</h1>
+        <p>فخامة تليق بذوقك - تركيبات عطرية مميزة بثبات وفوحان يدوم</p>
+    </header>
+
+    <div class="container">
+        
+        <div class="filter-buttons">
+            <button class="filter-btn active" onclick="setCategory('all', this)">الكل</button>
+            <button class="filter-btn" onclick="setCategory('men', this)">عطور رجالي</button>
+            <button class="filter-btn" onclick="setCategory('women', this)">عطور حريمي</button>
+        </div>
+
+        <div class="products-grid" id="productsGrid"></div>
+
+        <div class="checkout-section">
+            <h2>سلة المشتريات وإتمام الطلب</h2>
+            <div id="cartItems" class="cart-items">
+                <p class="empty-cart-msg">السلة فارغة حالياً. قم بإضافة بعض العطور!</p>
+            </div>
+            
+            <div class="cart-total" id="cartTotal">الإجمالي: 0 ج.م</div>
+
+            <form id="orderForm" onsubmit="handleOrderSubmit(event)">
+                <div class="form-group">
+                    <label for="clientName">الاسم بالكامل:</label>
+                    <input type="text" id="clientName" required placeholder="أدخل اسمك الكريم">
+                </div>
+                <div class="form-group">
+                    <label for="clientPhone">رقم الهاتف التواصل:</label>
+                    <input type="tel" id="clientPhone" required placeholder="01xxxxxxxxx">
+                </div>
+                <div class="form-group">
+                    <label for="clientAddress">العنوان التفصيلي للتوصيل:</label>
+                    <input type="text" id="clientAddress" required placeholder="المحافظة / المدينة / الشارع">
+                </div>
+                <p style="color: var(--gold); margin-bottom: 10px; font-size: 0.9rem;">* الدفع نقداً عند الاستلام</p>
+                <button type="submit" class="submit-btn">إرسال الطلب عبر الواتساب</button>
+            </form>
+        </div>
+
+        <div class="contact-box">
+            <h3>للتواصل والاستفسار المباشر:</h3>
+            <a href="https://wa.me/201101509441" target="_blank" class="whatsapp-link">
+                تواصل معنا على الواتساب (01101509441)
+            </a>
+        </div>
+
+    </div>
+
+<script>
+   var PRODUCTS = [
+        // --- العطور الرجالي ---
+        { id: 1, name: "أربابورا + بليه", note: "30 مل", price: 140, old: 160, img: "images/1.jpeg", category: "men" },
+        { id: 2, name: "بيانكوا لاتيه", note: "30 مل", price: 120, old: 140, img: "images/2.jpeg", category: "men" },
+        { id: 3, name: "خمره قهوه", note: "30 مل", price: 170, old: 150, img: "images/3.jpeg", category: "men" },
+        { id: 4, name: "إنفكتوس الإكسير", note: "30 مل", price: 140, old: 160, img: "images/5.jpeg", category: "men" },
+        { id: 5, name: "ديور هوم إنتنس", note: "30 مل", price: 140, old: 160, img: "images/6.jpeg", category: "men" },
+        { id: 6, name: "Althair Demarly", note: "30 مل", price: 140, old: 160, img: "images/7.jpeg", category: "men" },
+        { id: 7, name: "بيانكوا لاتيه", note: "30 مل - زجاجة عادية", price: 90, old: 100, img: "images/8.jpeg", category: "men" },
+        { id: 8, name: "بليه زيت خام", note: "2 جرام", price: 20, old: 25, img: "images/9.jpeg", category: "men" },
+        { id: 9, name: "Althair Demarly", note: "30 مل - زجاجة ثعبان", price: 100, old: 110, img: "images/10.jpeg", category: "men" },
+        { id: 10, name: "تستر 5 مل", note: "جميع الأنواع المتوفرة", price: 30, old: 40, img: "images/11.jpeg", category: "men" },
+
+        // --- العطور الحريمي ---
+        { id: 11, name: "كيالي مارشميلو", note: "50 مل", price: 180, old: 200, img: "images/13.jpeg", category: "women" },
+        { id: 12, name: "", note: "25 مل", price: 40, old: 50, img: "images/14.jpeg", category: "women" },
+        { id: 13, name: "", note: "25 مل", price: 40, old: 50, img: "images/15.jpeg", category: "women" },
+        { id: 14, name: "", note: "25 مل", price: 40, old: 50, img: "images/16.jpeg", category: "women" },
+        { id: 15, name: "فوحات دولاب وعربيات", note: "30 مل", price: 40, old: 50, img: "images/17.jpeg", category: "women" },
+        { id: 16, name: "كيالي فانليا", note: "30 مل", price: 80, old: 90, img: "images/18.jpeg", category: "women" },
+        { id: 17, name: "يارا كاندي", note: "30 مل", price: 90, old: 100, img: "images/19.jpeg", category: "women" }
+    ];
+    var currentCategory = 'all';
+    var cart = [];
+
+    function renderProducts() {
+        var grid = document.getElementById("productsGrid");
+        var filtered = PRODUCTS;
+
+        if (currentCategory !== 'all') {
+            filtered = PRODUCTS.filter(function(p) { return p.category === currentCategory; });
+        }
+
+        var html = '';
+        for (var i = 0; i < filtered.length; i++) {
+            var p = filtered[i];
+            html += '<div class="product-card">' +
+                '<img src="' + p.img + '" class="product-img" alt="' + p.name + '" onerror="this.src=\'https://via.placeholder.com/200x200?text=Elixir+Perfume\'">' +
+                '<div>' +
+                    '<div class="product-title">' + p.name + '</div>' +
+                    (p.note ? '<div class="product-note">' + p.note + '</div>' : '') +
+                    '<div class="price-box">' +
+                        '<span class="current-price">' + p.price + ' ج.م</span>' +
+                        (p.old ? '<span class="old-price">' + p.old + ' ج.م</span>' : '') +
+                    '</div>' +
+                '</div>' +
+                '<button class="add-to-cart-btn" onclick="addToCart(' + p.id + ')">أضف إلى السلة</button>' +
+            '</div>';
+        }
+        grid.innerHTML = html;
+    }
+
+    function setCategory(cat, btn) {
+        currentCategory = cat;
+        var buttons = document.querySelectorAll('.filter-btn');
+        buttons.forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        renderProducts();
+    }
+
+    function addToCart(productId) {
+        var item = cart.find(function(i) { return i.id === productId; });
+        if (item) {
+            item.qty++;
+        } else {
+            var product = PRODUCTS.find(function(p) { return p.id === productId; });
+            cart.push({ id: product.id, name: product.name, price: product.price, qty: 1 });
+        }
+        renderCart();
+    }
+
+    function renderCart() {
+        var cartContainer = document.getElementById("cartItems");
+        var totalContainer = document.getElementById("cartTotal");
+
+        if (cart.length === 0) {
+            cartContainer.innerHTML = '<p class="empty-cart-msg">السلة فارغة حالياً. قم بإضافة بعض العطور!</p>';
+            totalContainer.innerText = 'الإجمالي: 0 ج.م';
+            return;
+        }
+
+        var html = '';
+        var total = 0;
+
+        cart.forEach(function(item, index) {
+            var itemTotal = item.price * item.qty;
+            total += itemTotal;
+            html += '<div class="cart-item">' +
+                '<div>' +
+                    '<strong>' + item.name + '</strong><br>' +
+                    '<small>' + item.price + ' ج.م × ' + item.qty + '</small>' +
+                '</div>' +
+                '<div>' +
+                    '<button onclick="changeQty(' + index + ', 1)" style="padding:2px 8px;">+</button> ' +
+                    '<button onclick="changeQty(' + index + ', -1)" style="padding:2px 8px;">-</button>' +
+                '</div>' +
+            '</div>';
+        });
+
+        cartContainer.innerHTML = html;
+        totalContainer.innerText = 'الإجمالي: ' + total + ' ج.م';
+    }
+
+    function changeQty(index, delta) {
+        cart[index].qty += delta;
+        if (cart[index].qty <= 0) {
+            cart.splice(index, 1);
+        }
+        renderCart();
+    }
+
+    function handleOrderSubmit(event) {
+        event.preventDefault();
+
+        if (cart.length === 0) {
+            alert("يرجى إضافة عطور إلى السلة أولاً قبل إرسال الطلب!");
+            return;
+        }
+
+        var name = document.getElementById("clientName").value;
+        var phone = document.getElementById("clientPhone").value;
+        var address = document.getElementById("clientAddress").value;
+
+        var message = "*طلب جديد من متجر Elixir Perfume*\n\n";
+        message += "*بيانات العميل:*\n";
+        message += "- الاسم: " + name + "\n";
+        message += "- الهاتف: " + phone + "\n";
+        message += "- العنوان: " + address + "\n\n";
+
+        message += "*الطلبات:*\n";
+        var total = 0;
+        cart.forEach(function(item) {
+            var sub = item.price * item.qty;
+            total += sub;
+            message += "• " + item.name + " (" + item.qty + "x) - " + sub + " ج.م\n";
+        });
+
+        message += "\n*الإجمالي المطلوب:* " + total + " ج.م\n";
+        message += "*طريقة الدفع:* كاش عند الاستلام\n";
+
+        var encodedMsg = encodeURIComponent(message);
+        var whatsappUrl = "https://wa.me/201101509441?text=" + encodedMsg;
+
+        window.open(whatsappUrl, '_blank');
+    }
+
+    renderProducts();
+</script>
+
+</body>
+</html>
